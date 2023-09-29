@@ -162,7 +162,14 @@ public class MusicPlayerActivity extends AppCompatActivity {
     private void playPreviousMusic(){
         mediaPlayer.stop();
 
-        currentPosition = (currentPosition - 1) % currentPlaylist.getMusicIds().size();
+        currentPosition -= 1;
+        if(currentPosition>=0){
+            currentPosition = currentPosition % currentPlaylist.getMusicIds().size();
+        }
+        else{
+            currentPosition = 0;
+        }
+
         currentMusic = currentPlaylist.getMusicIds().get(currentPosition);
 
         playMusic();

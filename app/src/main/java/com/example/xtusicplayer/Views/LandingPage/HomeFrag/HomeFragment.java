@@ -56,15 +56,16 @@ public class HomeFragment extends Fragment implements AdapterView.OnItemSelected
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity(),LinearLayoutManager.VERTICAL,false));
 
         //init
-        showProgressBar();
         musicViewModel = new ViewModelProvider(this).get(MusicViewModel.class);
 
         //Fetching songs
+        showProgressBar();
         musicViewModel.getMusicEntityList().observe(getViewLifecycleOwner(), new Observer<List<MusicEntity>>() {
             @Override
             public void onChanged(List<MusicEntity> musicEntities) {
                 musicList = musicEntities;
                 setAdapter();
+                hideProgressBar();
             }
         });
 
@@ -82,18 +83,15 @@ public class HomeFragment extends Fragment implements AdapterView.OnItemSelected
     private void setAdapter(){
 
         if(musicList != null){
-            showProgressBar();
             allMusicAdapter = new AllMusicAdapter(getContext(),musicList, new AllMusicAdapter.OnItemClickListener() {
                 @Override
                 public void onItemClick(int position) {
                     onClickCallback = (OnClickCallback) getActivity();
-//                    currentMusic = musicList.get(position);
                     onClickCallback.shareData(position, new PlaylistEntity("currentPlaylist",musicList));
                 }
             });
 
             recyclerView.setAdapter(allMusicAdapter);
-            hideProgressBar();
         }
     }
 

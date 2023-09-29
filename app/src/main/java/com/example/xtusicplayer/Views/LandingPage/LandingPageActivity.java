@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.Handler;
+import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.FrameLayout;
@@ -13,6 +14,7 @@ import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
@@ -56,7 +58,7 @@ public class LandingPageActivity extends AppCompatActivity implements OnClickCal
     private AppDatabase appDatabase;
     private MusicViewModel musicViewModel;
     private PlaylistViewModel playlistViewModel;
-    private List<MusicEntity> musicEntityList;
+    private List<MusicEntity> musicEntityList, allMusicList;
     private List<PlaylistEntity> playlistEntityList;
     private int currentPosition;
 
@@ -88,44 +90,27 @@ public class LandingPageActivity extends AppCompatActivity implements OnClickCal
         searchFragment = new SearchFragment();
         libraryFragment = new LibraryFragment();
 
-        // Show the initial fragment
-        getSupportFragmentManager().beginTransaction()
-                .add(R.id.container_frame, homeFragment)
-                .add(R.id.container_frame, searchFragment)
-                .add(R.id.container_frame, libraryFragment)
-                .hide(searchFragment)
-                .hide(libraryFragment)
-                .commit();
+        // Set the initial fragment
+        loadFragment(new HomeFragment());
+        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                Fragment selectedFragment = null;
 
-        // Set up the bottom navigation item click listener
-        bottomNavigationView.setOnNavigationItemSelectedListener(item -> {
-            FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+                // Handle navigation item clicks
+                if(item.getItemId() == R.id.nav_search){
+                    selectedFragment = searchFragment;
+                }
+                else if(item.getItemId() == R.id.nav_library){
+                    selectedFragment = libraryFragment;
+                }
+                else {
+                    selectedFragment = homeFragment;
+                }
 
-            Fragment topFragment = getSupportFragmentManager().findFragmentById(R.id.container_frame);
-            if(topFragment!=homeFragment && topFragment!=searchFragment && topFragment!=libraryFragment){
-                getSupportFragmentManager().popBackStack();
+                // Load the selected fragment
+                return loadFragment(selectedFragment);
             }
-
-            switch (item.getItemId()) {
-                case R.id.nav_home:
-                    transaction.show(homeFragment);
-                    transaction.hide(searchFragment);
-                    transaction.hide(libraryFragment);
-                    break;
-                case R.id.nav_search:
-                    transaction.show(searchFragment);
-                    transaction.hide(homeFragment);
-                    transaction.hide(libraryFragment);
-                    break;
-                case R.id.nav_library:
-                    transaction.show(libraryFragment);
-                    transaction.hide(searchFragment);
-                    transaction.hide(homeFragment);
-                    break;
-            }
-
-            transaction.commit();
-            return true;
         });
 
         LandingPageActivity.this.runOnUiThread(new Runnable() {
@@ -173,6 +158,17 @@ public class LandingPageActivity extends AppCompatActivity implements OnClickCal
                 }
             });
         }
+    }
+
+    private boolean loadFragment(Fragment fragment) {
+        if (fragment != null) {
+            getSupportFragmentManager()
+                    .beginTransaction()
+                    .replace(R.id.container_frame, fragment)
+                    .commit();
+            return true;
+        }
+        return false;
     }
 
     @Override

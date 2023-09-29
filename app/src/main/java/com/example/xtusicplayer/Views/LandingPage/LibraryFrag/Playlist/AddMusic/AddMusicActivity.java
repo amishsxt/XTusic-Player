@@ -27,7 +27,8 @@ public class AddMusicActivity extends AppCompatActivity {
 
     private RecyclerView recyclerView;
     private ProgressBar progressBar;
-    private ImageView backBtn,searchView;;
+    private SearchView searchView;
+    private ImageView backBtn;
     private AppDatabase appDatabase;
     private PlaylistViewModel playlistViewModel;
     private MusicViewModel musicViewModel;
