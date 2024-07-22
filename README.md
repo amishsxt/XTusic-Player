@@ -12,14 +12,15 @@ Welcome to the XTusicPlayer. An Offline Music Player! 🎶
 
 ## Screenshots
 
-
 <table>
     <tr>
-        <td><img src="https://github.com/amishsxt/XTusic-Player/assets/93335461/eb2fc68a-3c55-4085-9d52-dfd2663e8925.png" alt="Screenshot 01" width="100%"></td>
-        <td><img src="https://github.com/amishsxt/XTusic-Player/assets/93335461/844e03b4-1b45-4a2d-b598-739959ff28d1.png" alt="Screenshot 02" width="100%"></td>
-        <td><img src="https://github.com/amishsxt/XTusic-Player/assets/93335461/9cc0b87e-ceb0-46a3-b835-3f06aa6b3bc6.png" alt="Screenshot 03" width="100%"></td>
+        <td><img src="https://github.com/user-attachments/assets/60af5bee-c365-4a8f-afb6-46b9daea050f" alt="Screenshot 01" width="100%"></td>
+        <td><img src="https://github.com/user-attachments/assets/2a930596-ec6f-470c-9351-347fee07510d" alt="Screenshot 02" width="100%"></td>
+        <td><img src="https://github.com/user-attachments/assets/383dfe70-3700-43a6-9337-c0def0bb2d8c" alt="Screenshot 03" width="100%"></td>
     </tr>
 </table>
+
+
 
 
 
